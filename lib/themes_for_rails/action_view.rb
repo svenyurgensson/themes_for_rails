@@ -1,6 +1,6 @@
 # encoding: utf-8
 module ThemesForRails
-  
+
   module ActionView
 
     extend ActiveSupport::Concern
@@ -12,7 +12,7 @@ module ThemesForRails
     def current_theme_stylesheet_path(asset)
       base_theme_stylesheet_path(:theme => self.theme_name, :asset => "#{asset}.css")
     end
-    
+
     def current_theme_javascript_path(asset)
       base_theme_javascript_path(:theme => self.theme_name, :asset => "#{asset}.js")
     end
@@ -32,7 +32,7 @@ module ThemesForRails
     def theme_image_path(asset, new_theme_name = self.theme_name)
       base_theme_image_path(:theme => new_theme_name, :asset => asset)
     end
-    
+
     def theme_image_tag(source, options = {})
       image_tag(theme_image_path(source), options)
     end
@@ -58,5 +58,9 @@ module ThemesForRails
 
       stylesheet_link_tag(*files_with_options)
     end
+
+    include ThemesForRails::PreviewTheme
+
+
   end
 end
