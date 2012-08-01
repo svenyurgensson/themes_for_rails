@@ -63,13 +63,18 @@ module ThemesForRails
   end
 
   # Extend OpenStruct to support nested structures
-  class NestedOpenStruct < OpenStruct
-    def initialize(hash = nil)
-      @table = {}
-      if hash
-        for k, v in hash
-          @table[k.to_sym] = v.instance_of?(Hash) ? NestedOpenStruct.new(v) : v
-          new_ostruct_member(k)
+  unless defined?(NestedOpenStruct)
+    class NestedOpenStruct < OpenStruct
+      def [](key)
+        @table[key.to_sym]
+      end
+      def initialize(hash = nil)
+        @table = {}
+        if hash
+          for k, v in hash
+            @table[k.to_sym] = v.instance_of?(Hash) ? NestedOpenStruct.new(v) : v
+            new_ostruct_member(k)
+          end
         end
       end
     end
